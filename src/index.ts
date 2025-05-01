@@ -27,8 +27,33 @@ const server = new McpServer({
       description: "Get a random Yo Mama joke",
       parameters: {},
     },
+    {
+      name: "get-cat-facts",
+      description: "Get a random cat fact",
+      parameters: {}
+    },
+    
   ],
 });
+
+// Get a random cat fact
+const getCatFact = server.tool(
+  "get-cat-fact",
+  "Get a random cat fact",
+  async () => {
+    const response = await fetch("https://catfact.ninja/fact");
+    const data = await response.json();
+    return {
+      content: [
+        {
+          type: "text",
+          text: data.fact,
+        },
+      ],
+    };
+  }
+);
+
 
 // Get Chuck Norris joke tool
 const getChuckJoke = server.tool(
